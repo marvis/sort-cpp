@@ -75,7 +75,7 @@ int main()
     string seqs[] = { "PETS09-S2L1", "TUD-Campus", "TUD-Stadtmitte", "ETH-Bahnhof", "ETH-Sunnyday", "ETH-Pedcross2", "KITTI-13", "KITTI-17", "ADL-Rundle-6", "ADL-Rundle-8", "Venice-2"}; 
 	vector<string> sequences(seqs, seqs+11);
 	for (auto seq: sequences)
-		TestSORT(seq, true);
+		TestSORT(seq, false);
 	//TestSORT("PETS09-S2L1", true);
 
 	// Note: time counted here is of tracking procedure, while the running speed bottleneck is opening and parsing detectionFile.
