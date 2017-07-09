@@ -25,7 +25,8 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip> // to format image names using setw() and setfill()
-#include <io.h>    // to check file existence using POSIX function access(). On Linux include <unistd.h>.
+//#include <io.h>    // to check file existence using POSIX function access(). On Linux include <unistd.h>.
+#include <unistd.h>
 #include <set>
 
 #include "Hungarian.h"
@@ -71,8 +72,9 @@ void TestSORT(string seqName, bool display);
 
 int main()
 {
-	vector<string> sequences = { "PETS09-S2L1", "TUD-Campus", "TUD-Stadtmitte", "ETH-Bahnhof", "ETH-Sunnyday", "ETH-Pedcross2", "KITTI-13", "KITTI-17", "ADL-Rundle-6", "ADL-Rundle-8", "Venice-2" };
-	for (auto seq : sequences)
+    string seqs[] = { "PETS09-S2L1", "TUD-Campus", "TUD-Stadtmitte", "ETH-Bahnhof", "ETH-Sunnyday", "ETH-Pedcross2", "KITTI-13", "KITTI-17", "ADL-Rundle-6", "ADL-Rundle-8", "Venice-2"}; 
+	vector<string> sequences(seqs, seqs+11);
+	for (auto seq: sequences)
 		TestSORT(seq, false);
 	//TestSORT("PETS09-S2L1", true);
 
@@ -97,7 +99,7 @@ void TestSORT(string seqName, bool display)
 	string imgPath = "D:/Data/Track/2DMOT2015/train/" + seqName + "/img1/";
 
 	if (display)
-		if (_access(imgPath.c_str(), 0) == -1)
+		if (access(imgPath.c_str(), 0) == -1)
 		{
 			cerr << "Image path not found!" << endl;
 			display = false;
@@ -142,7 +144,7 @@ void TestSORT(string seqName, bool display)
 			maxFrame = tb.frame;
 	}
 
-	vector<vector<TrackingBox>> detFrameData;
+	vector<vector<TrackingBox> > detFrameData;
 	vector<TrackingBox> tempVec;
 	for (int fi = 0; fi < maxFrame; fi++)
 	{
@@ -162,8 +164,8 @@ void TestSORT(string seqName, bool display)
 	KalmanTracker::kf_count = 0; // tracking id relies on this, so we have to reset it in each seq.
 
 	// variables used in the for-loop
-	vector<Rect_<float>> predictedBoxes;
-	vector<vector<double>> iouMatrix;
+	vector<Rect_<float> > predictedBoxes;
+	vector<vector<double> > iouMatrix;
 	vector<int> assignment;
 	set<int> unmatchedDetections;
 	set<int> unmatchedTrajectories;
@@ -276,7 +278,7 @@ void TestSORT(string seqName, bool display)
 
 			set_difference(allItems.begin(), allItems.end(),
 				matchedItems.begin(), matchedItems.end(),
-				insert_iterator<set<int>>(unmatchedDetections, unmatchedDetections.begin()));
+				insert_iterator<set<int> >(unmatchedDetections, unmatchedDetections.begin()));
 		}
 		else if (detNum < trkNum) // there are unmatched trajectory/predictions
 		{

@@ -9,6 +9,9 @@
 // by Cong Ma, 2016
 // 
 
+#include <stdlib.h>
+#include <math.h>
+#include <float.h>
 #include "Hungarian.h"
 
 
@@ -19,7 +22,7 @@ HungarianAlgorithm::~HungarianAlgorithm(){}
 //********************************************************//
 // A single function wrapper for solving assignment problem.
 //********************************************************//
-double HungarianAlgorithm::Solve(vector<vector<double>>& DistMatrix, vector<int>& Assignment)
+double HungarianAlgorithm::Solve(vector<vector<double> >& DistMatrix, vector<int>& Assignment)
 {
 	unsigned int nRows = DistMatrix.size();
 	unsigned int nCols = DistMatrix[0].size();
